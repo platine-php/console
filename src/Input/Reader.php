@@ -55,5 +55,140 @@ namespace Platine\Console\Input;
 class Reader
 {
 
+    /**
+     * The input stream
+     * @var resource
+     */
+    protected $stream;
 
+    /**
+     * Create new instance
+     * @param string|null $path the input read path
+     */
+    public function __construct(?string $path = null)
+    {
+        $stream = STDIN;
+        if ($path !== null) {
+            $stream = fopen($path, 'r');
+        }
+
+        $this->stream = $stream;
+    }
+
+    /**
+     * Read the user input
+     * @param mixed $default
+     * @param callable|null $callback The validator/sanitizer callback.
+     * @return mixed
+     */
+    public function read($default = null, ?callable $callback = null)
+    {
+        $in = '';
+        $read = fgets($this->stream);
+
+        if ($read !== false) {
+            $in = rtrim($read, "\r\n");
+        }
+
+        if ($in === '' && $default !== null) {
+            return $default;
+        }
+
+        return $callback !== null
+                ? $callback($in)
+                : $in;
+    }
+
+    /**
+     * Read all line of the user input
+     * @param callable|null $callback The validator/sanitizer callback.
+     * @return mixed
+     */
+    public function readAll(?callable $callback = null)
+    {
+        $in = stream_get_contents($this->stream);
+
+        return $callback !== null
+                ? $callback($in)
+                : $in;
+    }
+
+    /**
+     * Read content piped to the stream without waiting.
+     * @param callable|null $callback The validator/sanitizer callback.
+     * @return mixed
+     */
+    public function readPipe(?callable $callback = null)
+    {
+        $stdin = '';
+        $read = [$this->stream];
+        $write = [];
+        $except = [];
+
+        if (stream_select($read, $write, $except, 0) === 1) {
+            while ($line = fgets($this->stream)) {
+                $stdin .= $line;
+            }
+        }
+
+        if ($stdin === '') {
+            return $callback !== null
+                ? $callback($this)
+                : '';
+        }
+        return $stdin;
+    }
+
+    /**
+     * Read a line from configured stream (or terminal) but don't echo it back.
+     * @param mixed $default
+     * @param callable|null $callback The validator/sanitizer callback.
+     * @return mixed
+     */
+    public function readHidden($default = null, ?callable $callback = null)
+    {
+        if (substr(strtoupper(PHP_OS), 0, 3) === 'WIN') {
+            return $this->readHiddenWindows($default, $callback);
+        }
+
+        shell_exec('stty -echo');
+        $in = $this->read($default, $callback);
+        shell_exec('stty echo');
+
+        echo PHP_EOL;
+
+        return $in;
+    }
+
+    /**
+     * Read a line from configured stream (or terminal)
+     *  in  windows Os but don't echo it back.
+     * @param mixed $default
+     * @param callable|null $callback The validator/sanitizer callback.
+     * @return mixed
+     */
+    protected function readHiddenWindows($default = null, ?callable $callback = null)
+    {
+        $cmd = 'powershell -Command ' . implode('; ', array_filter([
+                    '$pword = Read-Host -AsSecureString',
+                    '$pword = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pword)',
+                    '$pword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($pword)',
+                    'echo $pword',
+                ]));
+
+        $in = '';
+        $result = shell_exec($cmd);
+
+        if ($result !== null) {
+            $in = rtrim($result, "\r\n");
+        }
+
+        if ($in === '' && $default !== null) {
+            return $default;
+        }
+
+        return $callback !== null
+                ? $callback($in)
+                : $in;
+    }
 }

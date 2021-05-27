@@ -55,5 +55,35 @@ namespace Platine\Console\Input;
 class Argument extends Parameter
 {
 
+    /**
+     * {@inheritdoc}
+     */
+    public function parse(string $raw): void
+    {
+        $name = $raw;
 
+        $this->name = $name;
+
+        // Format is "name:default+value1,default+value2" ('+' => ' ')!
+        if (strpos($name, ':') !== false) {
+            $name = str_replace('+', ' ', $name);
+            $parts = explode(':', $name, 2);
+            if ($parts !== false) {
+                list($this->name, $this->default) = $parts;
+            }
+        }
+
+        $this->prepareDefault();
+    }
+
+    /**
+     * Update default value if needed
+     * @return void
+     */
+    protected function prepareDefault(): void
+    {
+        if ($this->isVariadic() && $this->default && !is_array($this->default)) {
+            $this->default = explode(',', $this->default, 2);
+        }
+    }
 }

@@ -55,5 +55,78 @@ namespace Platine\Console\Input;
 class Option extends Parameter
 {
 
+    /**
+     * The short option name
+     * @var string
+     */
+    protected string $short = '';
 
+     /**
+     * The long option name
+     * @var string
+     */
+    protected string $long = '';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function parse(string $raw): void
+    {
+        if (strpos($this->raw, '-with-') !== false) {
+            $this->default = false;
+        } elseif (strpos($this->raw, '-no-') !== false) {
+            $this->default = true;
+        }
+
+        $parts = preg_split('/[\s,\|]+/', $raw);
+
+        if ($parts !== false) {
+            $this->short = $parts[0];
+            $this->long = $parts[0];
+
+            if (isset($parts[1])) {
+                $this->long = $parts[1];
+            }
+        }
+
+        $this->name = str_replace(['--', 'no-', 'with-'], '', $this->long);
+    }
+
+    /**
+     * Return the short option name
+     * @return string
+     */
+    public function getShort(): string
+    {
+        return $this->short;
+    }
+
+    /**
+     * Return the long option name
+     * @return string
+     */
+    public function getLong(): string
+    {
+        return $this->long;
+    }
+
+    /**
+     * Whether the given argument match option name
+     * @param string $arg
+     * @return bool
+     */
+    public function is(string $arg): bool
+    {
+        return $this->short === $arg
+              || $this->long === $arg;
+    }
+
+    /**
+     * Check if the option is bool type.
+     * @return bool
+     */
+    public function isbool(): bool
+    {
+        return preg_match('/\-no-|\-with-/', $this->long) > 0;
+    }
 }

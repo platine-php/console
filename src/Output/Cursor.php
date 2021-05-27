@@ -55,5 +55,110 @@ namespace Platine\Console\Output;
 class Cursor
 {
 
+    /**
+     * Returns signal to move cursor up "count" times.
+     * @param int $count
+     * @return string
+     */
+    public function up(int $count = 1): string
+    {
+        return sprintf("\e[%dA", max($count, 1));
+    }
 
+    /**
+     * Returns signal to move cursor down "count" times.
+     * @param int $count
+     * @return string
+     */
+    public function down(int $count = 1): string
+    {
+        return sprintf("\e[%dB", max($count, 1));
+    }
+
+    /**
+     * Returns signal to move cursor right "count" times.
+     * @param int $count
+     * @return string
+     */
+    public function right(int $count = 1): string
+    {
+        return sprintf("\e[%dC", max($count, 1));
+    }
+
+    /**
+     * Returns signal to move cursor left "count" times.
+     * @param int $count
+     * @return string
+     */
+    public function left(int $count = 1): string
+    {
+        return sprintf("\e[%dD", max($count, 1));
+    }
+
+    /**
+     * Returns signal to move cursor next line "count" times.
+     * @param int $count
+     * @return string
+     */
+    public function next(int $count = 1): string
+    {
+        return str_repeat("\e[E", max($count, 1));
+    }
+
+    /**
+     * Returns signal to move cursor previous line "count" times.
+     * @param int $count
+     * @return string
+     */
+    public function prev(int $count = 1): string
+    {
+        return str_repeat("\e[F", max($count, 1));
+    }
+
+    /**
+     * Returns signal to erase current line.
+     * @return string
+     */
+    public function eraseLine(): string
+    {
+        return "\e[2K";
+    }
+
+    /**
+     * Returns signal to clear string.
+     * @return string
+     */
+    public function clear(): string
+    {
+        return "\e[2K";
+    }
+
+    /**
+     * Returns signal to erase lines upward.
+     * @return string
+     */
+    public function clearUp(): string
+    {
+        return "\e[1J";
+    }
+
+    /**
+     * Returns signal to erase lines downward.
+     * @return string
+     */
+    public function clearDown(): string
+    {
+        return "\e[J";
+    }
+
+    /**
+     * Returns signal to move cursor to given x, y position.
+     * @param int $x
+     * @param int $y
+     * @return string
+     */
+    public function moveTo(int $x, int $y): string
+    {
+        return sprintf("\e[%d;%dH", $y, $x);
+    }
 }

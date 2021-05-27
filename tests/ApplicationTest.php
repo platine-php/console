@@ -18,7 +18,7 @@ class ApplicationTest extends PlatineTestCase
 
     public function testConstructor(): void
     {
-        $s = new Application();
+        $s = new Application('My app');
 
         $this->assertInstanceOf(Application::class, $s);
     }
