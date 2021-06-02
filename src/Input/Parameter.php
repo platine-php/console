@@ -97,7 +97,7 @@ abstract class Parameter
      * Whether the parameter is optional
      * @var bool
      */
-    protected bool $optional = false;
+    protected bool $optional = true;
 
     /**
      * Whether the parameter is variadic
@@ -120,7 +120,7 @@ abstract class Parameter
         string $description = '',
         $default = null,
         bool $required = false,
-        bool $optional = false,
+        bool $optional = true,
         bool $variadic = false,
         ?callable $filter = null
     ) {
@@ -128,19 +128,19 @@ abstract class Parameter
         $this->description = $description;
         $this->default = $default;
         $this->filter = $filter;
-
-        $this->required = $required;
-        $this->optional = $optional;
         $this->variadic = $variadic;
 
         //If the parameter is required or optional
         if ($required && $optional) {
-            $this->optional = false;
+            $optional = false;
         }
 
-        if ($optional && $required) {
-            $this->required = false;
+        if (!$required && !$optional) {
+            $optional = true;
         }
+
+        $this->required = $required;
+        $this->optional = $optional;
 
         $this->parse($raw);
     }

@@ -60,27 +60,34 @@ class Table
 
     /**
      * Render table data
-     * @param array<int, array<int, string>> $rows
+     * @param array<int, array<int, array<string, string>>> $rows
      * @param array<string, string> $styles
      * @return string
      */
     public function render(array $rows, array $styles = []): string
     {
-        $table = $this->normalize($rows);
-        if (empty($table)) {
+        $normalizedTable = $this->normalize($rows);
+        if (empty($normalizedTable)) {
             return '';
         }
 
-        list($head, $tableRows) = $table;
+        /** @var array<string, int> $head */
+        $head = $normalizedTable['header'];
+
+        /** @var array<int, array<string, string>> $tableRows */
+        $tableRows = $normalizedTable['rows'];
+
         $normalizedStyles = $this->normalizeStyles($styles);
         $title = [];
         $dash = [];
         $body = [];
 
         list($start, $end) = $normalizedStyles['head'];
+        /** @var string $col */
+        /** @var int $size */
         foreach ($head as $col => $size) {
-            $dash[] = str_repeat('-', (int) $size + 2);
-            $title[] = str_pad(Helper::toWords($col), (int)$size, ' ');
+            $dash[] = str_repeat('-', $size + 2);
+            $title[] = str_pad(Helper::toWords($col), $size, ' ');
         }
 
         $titleStr = '|' . $start . ' '
@@ -88,11 +95,14 @@ class Table
                 . ' ' . $end . '|' . PHP_EOL;
 
         $odd = true;
+        /** @var array<int, array<string, string>> $row */
         foreach ($tableRows as $row) {
             $parts = [];
             list($start, $end) = $normalizedStyles[['even', 'odd'][(int) $odd]];
+            /** @var string $col */
+            /** @var int $size */
             foreach ($head as $col => $size) {
-                $parts[] = str_pad(isset($row[$col]) ? $row[$col] : '', (int)$size, ' ');
+                $parts[] = str_pad(isset($row[$col]) ? $row[$col] : '', $size, ' ');
             }
 
             $odd = !$odd;
@@ -109,8 +119,8 @@ class Table
 
     /**
      * Normalize table data
-     * @param array<int, array<int, mixed>> $rows
-     * @return array<int, array<int, string>>
+     * @param array<int, array<int, array<string, string>>> $rows
+     * @return array<string, array<mixed>>
      */
     protected function normalize(array $rows): array
     {
@@ -128,10 +138,11 @@ class Table
         }
 
         $header = array_fill_keys(array_keys($head), null);
-        foreach ($rows as $i => &$row) {
+        foreach ($rows as &$row) {
             $row = array_merge($header, $row);
         }
 
+        /** @var array<string, string> $header */
         foreach ($header as $col => &$value) {
             $cols = array_column($rows, $col);
             $span = array_map('strlen', $cols);
@@ -139,7 +150,10 @@ class Table
             $value = max($span);
         }
 
-        return [$header, $rows];
+        return [
+            'header' => $header,
+            'rows' => $rows
+        ];
     }
 
     /**

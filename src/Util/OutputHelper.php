@@ -117,6 +117,7 @@ class OutputHelper
                'line' => '',
                'args' => []
                ];
+
             $symbol = $trace['class'] . $trace['type'] . $trace['function'];
             $arguments = $this->stringifyArgs($trace['args']);
 
@@ -201,8 +202,7 @@ class OutputHelper
         $usage = str_replace('$0', $cmdName ? $cmdName : '[cmd]', $description);
 
         if (strpos($usage, ' ## ') === false) {
-            $this->writer->eol()
-                 ->green('Usage Examples: ', true, null, Color::BOLD)
+            $this->writer->eol()->boldGreen('Usage Examples: ', true)
                  ->colors($usage)->eol();
 
             return $this;
@@ -219,10 +219,9 @@ class OutputHelper
         }
 
         foreach ($lines as $i => &$pos) {
-            $replace = preg_replace('~</?\w+>~', '', $pos);
-            if ($replace !== null) {
-                $pos = strrpos($replace, ' ##');
-            }
+            $replace = (string) preg_replace('~</?\w+>~', '', $pos);
+            $pos = strrpos($replace, ' ##');
+
             if ($pos === false) {
                 unset($lines[$i]);
             }
@@ -243,7 +242,7 @@ class OutputHelper
         );
 
         $this->writer->eol()
-                 ->green('Usage Examples: ', true, null, Color::BOLD)
+                 ->boldGreen('Usage Examples: ', true)
                  ->colors($formatedUsage)->eol();
 
         return $this;
@@ -261,7 +260,7 @@ class OutputHelper
 
         foreach ($available as $cmd) {
             $lev = levenshtein($command, $cmd);
-            if ($lev > 0 || $lev < 5) {
+            if ($lev > 0 && $lev < 5) {
                 $closest[$cmd] = $lev;
             }
         }
@@ -342,11 +341,9 @@ class OutputHelper
             $this->writer->bold($header, true);
         }
 
-        $this->writer->eol()->green(
+        $this->writer->eol()->boldGreen(
             $type . ':',
-            true,
-            null,
-            Color::BOLD
+            true
         );
 
         if (empty($items)) {

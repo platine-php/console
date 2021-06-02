@@ -214,9 +214,9 @@ abstract class Parser
      * Parse an option, emit its event and set value
      * @param string $arg
      * @param string|null $nextArg
-     * @return bool
+     * @return mixed|bool
      */
-    protected function parseOptions(string $arg, ?string $nextArg = null): bool
+    protected function parseOptions(string $arg, ?string $nextArg = null)
     {
         $value = null;
         if ($nextArg !== null && substr($nextArg, 0, 1) !== '-') {
@@ -265,7 +265,10 @@ abstract class Parser
         if ($key === null) {
             $this->values[] = $value;
         } elseif ($isVariadic) {
-            $this->values[$key] = array_merge($this->values[$key], (array) $value);
+            $this->values[$key] = array_merge(
+                isset($this->values[$key]) ? $this->values[$key] : [],
+                (array) $value
+            );
         } else {
             $this->values[$key] = $value;
         }

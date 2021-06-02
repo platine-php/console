@@ -54,6 +54,7 @@ use Platine\Console\Exception\RuntimeException;
 use Platine\Console\Input\Argument;
 use Platine\Console\Input\Option;
 use Platine\Console\Input\Parser;
+use Platine\Console\Input\Reader;
 use Platine\Console\IO\Interactor;
 use Platine\Console\Output\Writer;
 use Platine\Console\Util\Helper;
@@ -384,11 +385,9 @@ class Command extends Parser
     {
         $options = $this->options;
 
-        unset(
-            $this->options['help'],
-            $this->options['version'],
-            $this->options['verbosity'],
-        );
+        unset($options['help']);
+        unset($options['version']);
+        unset($options['verbosity']);
 
         return $options;
     }
@@ -466,13 +465,13 @@ class Command extends Parser
     {
     }
 
-
     /**
      * Performs user interaction if required to set some missing values.
-     * @param Interactor $io
+     * @param Reader $reader
+     * @param Writer $writer
      * @return void
      */
-    public function interact(Interactor $io): void
+    public function interact(Reader $reader, Writer $writer): void
     {
     }
 
@@ -482,9 +481,9 @@ class Command extends Parser
      * @param mixed $object
      * @return mixed
      */
-    public function tap($object)
+    public function tap($object = null)
     {
-        return $object ? $object : $this->app;
+        return $object ?? $this->app;
     }
 
     /**
@@ -561,7 +560,7 @@ class Command extends Parser
         $values = array_filter($this->values(false));
 
         // Has some value, error!
-        if (!empty($values)) {
+        if (empty($values)) {
             throw new RuntimeException(sprintf(
                 'Unknown option [%s]',
                 $arg
@@ -586,15 +585,26 @@ class Command extends Parser
 
         $this->addOption('-V|--verbosity', 'Verbosity level', 0)
              ->on(function () {
-                $this->set('verbosity', $this->verbosity++);
+                $this->set('verbosity', ++$this->verbosity);
 
                 return false;
              });
 
         $this->onExit(function (int $exitCode = 0) {
-            exit($exitCode);
+            $this->terminate($exitCode);
         });
 
         return $this;
+    }
+
+    /**
+     * Terminate the program
+     * @codeCoverageIgnore
+     * @param int $exitCode
+     * @return void
+     */
+    protected function terminate(int $exitCode): void
+    {
+        exit($exitCode);
     }
 }

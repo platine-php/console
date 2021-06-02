@@ -125,7 +125,9 @@ class Application
         $this->version = $version;
 
         $this->onExit = $onExit ? $onExit : function (int $exitCode = 0) {
+            //@codeCoverageIgnoreStart
             exit($exitCode);
+            //@codeCoverageIgnoreEnd
         };
 
         $this->command('__default__', 'Default command', '', true, true)
@@ -389,7 +391,7 @@ class Application
                     $footer
                 );
 
-        return ($this->onExit)();
+        return ($this->onExit)(0);
     }
 
     /**
@@ -425,7 +427,7 @@ class Application
 
         // Let the command collect more data
         // (if missing or needs confirmation)
-        $command->interact($this->io());
+        $command->interact($this->io()->reader(), $this->io()->writer());
 
         return $command->execute();
     }

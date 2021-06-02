@@ -259,7 +259,10 @@ class Interactor
 
         $this->writer->eol()->yellow($label);
 
-        return $this->promptOptions(array_keys($choices), $default);
+        /** @var array<string> $keys */
+        $keys = array_keys($choices);
+
+        return $this->promptOptions($keys, $default);
     }
 
     /**
@@ -294,11 +297,13 @@ class Interactor
     protected function isValidChoice(string $choice, array $choices, bool $case): bool
     {
         if (Helper::isAssocArray($choices)) {
+            /** @var array<string> $choices */
             $choices = array_keys($choices);
         }
 
         $func = ['strcasecmp', 'strcmp'][(int) $case];
         foreach ($choices as $option) {
+            //Don't use === here
             if ($func($choice, $option) == 0) {
                 return true;
             }

@@ -125,7 +125,7 @@ class Option extends Parameter
      * Check if the option is bool type.
      * @return bool
      */
-    public function isbool(): bool
+    public function isBool(): bool
     {
         return preg_match('/\-no-|\-with-/', $this->long) > 0;
     }

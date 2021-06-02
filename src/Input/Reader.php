@@ -83,20 +83,20 @@ class Reader
      */
     public function read($default = null, ?callable $callback = null)
     {
-        $in = '';
+        $input = '';
         $read = fgets($this->stream);
 
         if ($read !== false) {
-            $in = rtrim($read, "\r\n");
+            $input = rtrim($read, "\r\n");
         }
 
-        if ($in === '' && $default !== null) {
+        if ($input === '' && $default !== null) {
             return $default;
         }
 
         return $callback !== null
-                ? $callback($in)
-                : $in;
+                ? $callback($input)
+                : $input;
     }
 
     /**
@@ -106,11 +106,11 @@ class Reader
      */
     public function readAll(?callable $callback = null)
     {
-        $in = stream_get_contents($this->stream);
+        $input = stream_get_contents($this->stream);
 
         return $callback !== null
-                ? $callback($in)
-                : $in;
+                ? $callback($input)
+                : $input;
     }
 
     /**
@@ -152,12 +152,12 @@ class Reader
         }
 
         shell_exec('stty -echo');
-        $in = $this->read($default, $callback);
+        $input = $this->read($default, $callback);
         shell_exec('stty echo');
 
         echo PHP_EOL;
 
-        return $in;
+        return $input;
     }
 
     /**
@@ -176,19 +176,19 @@ class Reader
                     'echo $pword',
                 ]));
 
-        $in = '';
+        $input = '';
         $result = shell_exec($cmd);
 
         if ($result !== null) {
-            $in = rtrim($result, "\r\n");
+            $input = rtrim($result, "\r\n");
         }
 
-        if ($in === '' && $default !== null) {
+        if ($input === '' && $default !== null) {
             return $default;
         }
 
         return $callback !== null
-                ? $callback($in)
-                : $in;
+                ? $callback($input)
+                : $input;
     }
 }
