@@ -6,7 +6,7 @@ namespace Platine\Test\Console\Output;
 
 use Error;
 use Platine\Console\Output\Color;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Color class tests

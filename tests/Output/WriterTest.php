@@ -9,7 +9,7 @@ use org\bovigo\vfs\vfsStream;
 use Platine\Console\Output\Color;
 use Platine\Console\Output\Cursor;
 use Platine\Console\Output\Writer;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Writer class tests

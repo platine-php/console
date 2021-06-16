@@ -6,7 +6,7 @@ namespace Platine\Test\Console\Output;
 
 use Platine\Console\Exception\InvalidArgumentException;
 use Platine\Console\Output\Table;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Table class tests

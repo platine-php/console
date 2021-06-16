@@ -9,7 +9,7 @@ use org\bovigo\vfs\vfsStream;
 use Platine\Console\Input\Reader;
 use Platine\Console\IO\Interactor;
 use Platine\Console\Output\Writer;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Interactor class tests

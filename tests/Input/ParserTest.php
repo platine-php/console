@@ -9,7 +9,7 @@ use Platine\Console\Exception\RuntimeException;
 use Platine\Console\Input\Argument;
 use Platine\Console\Input\Option;
 use Platine\Console\Input\Parser;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 use Platine\Test\Fixture\Console\MyParser;
 
 /**

@@ -6,7 +6,7 @@ namespace Platine\Test\Console\Input;
 
 use org\bovigo\vfs\vfsStream;
 use Platine\Console\Input\Reader;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Reader class tests

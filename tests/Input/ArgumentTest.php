@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Platine\Test\Console\Input;
 
 use Platine\Console\Input\Argument;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Argument class tests

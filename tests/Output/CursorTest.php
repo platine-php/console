@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Platine\Test\Console\Output;
 
 use Platine\Console\Output\Cursor;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Cursor class tests

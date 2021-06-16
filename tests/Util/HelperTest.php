@@ -7,7 +7,7 @@ namespace Platine\Test\Console\Util;
 use Platine\Console\Input\Option;
 use Platine\Console\Input\Parameter;
 use Platine\Console\Util\Helper;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Helper class tests

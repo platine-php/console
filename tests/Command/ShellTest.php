@@ -6,7 +6,7 @@ namespace Platine\Test\Console\Command;
 
 use Platine\Console\Command\Shell;
 use Platine\Console\Exception\RuntimeException;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 
 /**
  * Shell class tests

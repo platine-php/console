@@ -11,7 +11,7 @@ use Platine\Console\Input\Argument;
 use Platine\Console\Input\Option;
 use Platine\Console\Output\Writer;
 use Platine\Console\Util\OutputHelper;
-use Platine\PlatineTestCase;
+use Platine\Dev\PlatineTestCase;
 use Platine\Test\Fixture\Console\MyColor;
 use Platine\Test\Fixture\Console\MyCommand;
 use Platine\Test\Fixture\Console\MyToStringClass;
