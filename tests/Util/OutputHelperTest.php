@@ -335,7 +335,7 @@ My usage text
 
         $s = new OutputHelper($writer);
 
-        $s->showCommandNotFound('f', ['bar', 'foo', 'fun']);
+        $s->showCommandNotFound('f', ['bar', 'fun']);
 
         $stdout = $this->getOutputContent();
 
