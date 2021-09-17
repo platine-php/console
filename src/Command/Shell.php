@@ -356,7 +356,7 @@ class Shell
     protected function getDescriptors(): array
     {
         $out = $this->isWindows()
-               ? ['file', 'NUL', 'w']
+               ? ['pipe', 'w'] // ['file', 'NUL', 'w']
                : ['pipe', 'w'];
 
         return [
