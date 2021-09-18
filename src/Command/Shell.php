@@ -91,9 +91,9 @@ class Shell
 
     /**
      * List of environment variables
-     * @var array<string, mixed>
+     * @var array<string, mixed>|null
      */
-    protected array $env = [];
+    protected ?array $env = null;
 
     /**
      * The process exit code
@@ -215,14 +215,14 @@ class Shell
     /**
      * Set options used for process execution
      * @param string|null $cwd
-     * @param array<string, mixed> $env
+     * @param array<string, mixed>|null $env
      * @param float|null $timeout
      * @param array<string, mixed> $options
      * @return $this
      */
     public function setOptions(
         ?string $cwd = null,
-        array $env = [],
+        ?array $env = [],
         ?float $timeout = null,
         array $options = []
     ): self {
