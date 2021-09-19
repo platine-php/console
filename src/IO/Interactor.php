@@ -304,7 +304,7 @@ class Interactor
         $func = ['strcasecmp', 'strcmp'][(int) $case];
         foreach ($choices as $option) {
             //Don't use === here
-            if ($func($choice, $option) == 0) {
+            if ($func($choice, (string) $option) == 0) {
                 return true;
             }
         }
