@@ -24,24 +24,47 @@ class ShellTest extends PlatineTestCase
         $mock_function_exists_to_false = true;
 
         $this->expectException(RuntimeException::class);
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
     }
 
-    public function testConstructorSuccess(): void
+
+    public function testSetInput(): void
     {
         global $mock_function_exists_to_true;
         $mock_function_exists_to_true = true;
 
-        $s = new Shell('ls -l', 'foo');
-
-        $this->assertEquals(
-            'ls -l',
-            $this->getPropertyValue(Shell::class, $s, 'command')
-        );
+        $s = new Shell();
+        $s->setInput('foo');
 
         $this->assertEquals(
             'foo',
             $this->getPropertyValue(Shell::class, $s, 'input')
+        );
+    }
+
+    public function testSetInputNull(): void
+    {
+        global $mock_function_exists_to_true;
+        $mock_function_exists_to_true = true;
+
+        $s = new Shell();
+        $s->setInput(null);
+        $this->assertNull(
+            $this->getPropertyValue(Shell::class, $s, 'input')
+        );
+    }
+
+    public function testSetCommand(): void
+    {
+        global $mock_function_exists_to_true;
+        $mock_function_exists_to_true = true;
+
+        $s = new Shell();
+        $s->setCommand('ls -l');
+
+        $this->assertEquals(
+            'ls -l',
+            $this->getPropertyValue(Shell::class, $s, 'command')
         );
     }
 
@@ -50,7 +73,7 @@ class ShellTest extends PlatineTestCase
         global $mock_function_exists_to_true;
         $mock_function_exists_to_true = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $s->setOptions('tmp', ['FOO' => '123'], 10, []);
 
@@ -83,7 +106,7 @@ class ShellTest extends PlatineTestCase
         $mock_is_resource_to_true = true;
         $mock_proc_terminate_to_true = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->assertEquals(
             Shell::STATE_READY,
@@ -112,7 +135,7 @@ class ShellTest extends PlatineTestCase
         $mock_fclose_to_true = true;
         $mock_proc_get_status_to_array = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -159,7 +182,7 @@ class ShellTest extends PlatineTestCase
         $mock_proc_get_status_to_array = true;
         $mock_stream_set_blocking_to_true = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -186,7 +209,7 @@ class ShellTest extends PlatineTestCase
         $mock_stream_set_blocking_to_true = true;
         $mock_strtoupper_to_WIN = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -213,7 +236,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $s->setOptions('tmp', [], -10);
 
@@ -242,7 +265,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $s->setOptions('tmp', [], null);
 
@@ -281,7 +304,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $s->setOptions('tmp', [], null);
 
@@ -318,7 +341,7 @@ class ShellTest extends PlatineTestCase
         $mock_proc_get_status_to_array = true;
         $mock_stream_set_blocking_to_true = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -344,7 +367,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->runPrivateProtectedMethod($s, 'updateStatus');
 
@@ -370,7 +393,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'state', Shell::STATE_STARTED);
         $this->expectException(RuntimeException::class);
@@ -397,7 +420,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'state', Shell::STATE_STARTED);
         $this->runPrivateProtectedMethod($s, 'updateStatus');
@@ -424,7 +447,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
         $s->setOptions('tmp', [], 1);
 
         $this->setPropertyValue(Shell::class, $s, 'startTime', -109);
@@ -450,7 +473,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->runPrivateProtectedMethod($s, 'checkTimeout');
 
@@ -475,7 +498,7 @@ class ShellTest extends PlatineTestCase
         $mock_microtime_to_1 = true;
         $mock_usleep_to_void = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
         $s->setOptions('tmp', [], 10);
 
         $this->setPropertyValue(Shell::class, $s, 'state', Shell::STATE_STARTED);
@@ -497,7 +520,7 @@ class ShellTest extends PlatineTestCase
         $mock_is_resource_to_true = true;
         $mock_fwrite_to_int = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->runPrivateProtectedMethod($s, 'wait');
 
@@ -522,7 +545,7 @@ class ShellTest extends PlatineTestCase
         $mock_stream_set_blocking_to_true = true;
         $mock_stream_get_contents_to_false = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -548,7 +571,7 @@ class ShellTest extends PlatineTestCase
         $mock_stream_set_blocking_to_true = true;
         $mock_stream_get_contents_to_foo = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -575,7 +598,7 @@ class ShellTest extends PlatineTestCase
         $mock_stream_set_blocking_to_true = true;
         $mock_stream_get_contents_to_false = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -601,7 +624,7 @@ class ShellTest extends PlatineTestCase
         $mock_stream_set_blocking_to_true = true;
         $mock_stream_get_contents_to_foo = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 
@@ -624,7 +647,7 @@ class ShellTest extends PlatineTestCase
         $mock_fclose_to_true = true;
         $mock_proc_get_status_to_array = true;
 
-        $s = new Shell('ls -l', 'foo');
+        $s = new Shell();
 
         $this->setPropertyValue(Shell::class, $s, 'pipes', [[], [], []]);
 

@@ -75,7 +75,7 @@ class Shell
      * The command to execute
      * @var string
      */
-    protected string $command;
+    protected string $command = '';
 
     /**
      * Current working directory
@@ -151,19 +151,37 @@ class Shell
 
     /**
      * Create new instance
-     * @param string $command
-     * @param string|null $input
      */
-    public function __construct(string $command, ?string $input = null)
+    public function __construct()
     {
         if (!function_exists('proc_open')) {
             throw new RuntimeException(
                 'The "proc_open" could not be found in your PHP setup'
             );
         }
+    }
 
+    /**
+     * Set the command to be executed
+     * @param string $command
+     * @return $this
+     */
+    public function setCommand(string $command): self
+    {
         $this->command = $command;
+
+        return $this;
+    }
+
+    /**
+     * Set the input stream information
+     * @param string|null $input
+     * @return $this
+     */
+    public function setInput(?string $input): self
+    {
         $this->input = $input;
+        return $this;
     }
 
     /**
@@ -260,7 +278,7 @@ class Shell
             $this->options
         );
 
-        $this->setInput();
+        $this->writeInput();
 
         if (!is_resource($this->process)) {
             throw new RuntimeException(sprintf(
@@ -376,10 +394,10 @@ class Shell
     }
 
     /**
-     * Set the input stream information
+     * Write to input stream
      * @return void
      */
-    protected function setInput(): void
+    protected function writeInput(): void
     {
         if ($this->input !== null) {
             fwrite($this->pipes[self::STDIN_DESCRIPTOR], $this->input);
