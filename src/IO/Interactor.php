@@ -174,7 +174,6 @@ class Interactor
      * @param string $text
      * @param mixed $default
      * @param callable|null $callback
-     * @param int $retry
      * @param bool $required
      * @param bool $hidden
      * @return mixed
@@ -183,7 +182,6 @@ class Interactor
         string $text,
         $default = null,
         ?callable $callback = null,
-        int $retry = 3,
         bool $required = true,
         bool $hidden = false
     ) {
@@ -205,10 +203,10 @@ class Interactor
             $error = $ex->getMessage();
         }
 
-        if ($retry > 0 && $required && $input === '') {
+        while ($required && $input === '') {
             $this->writer->bgRed($error, true);
 
-            return $this->prompt($text, $default, $callback, $retry - 1, $hidden);
+            $input = $this->prompt($text, $default, $callback, $required, $hidden);
         }
 
         return $input ? $input : $default;
@@ -219,17 +217,15 @@ class Interactor
      * Currently for Unix only.
      * @param string $text
      * @param callable|null $callback
-     * @param int $retry
      * @param bool $required
      * @return mixed
      */
     public function promptHidden(
         string $text,
         ?callable $callback = null,
-        int $retry = 3,
         bool $required = true
     ) {
-        return $this->prompt($text, null, $callback, $retry, $required, true);
+        return $this->prompt($text, null, $callback, $required, true);
     }
 
     /**
