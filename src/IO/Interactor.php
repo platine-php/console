@@ -175,6 +175,7 @@ class Interactor
      * @param mixed $default
      * @param callable|null $callback
      * @param int $retry
+     * @param bool $required
      * @param bool $hidden
      * @return mixed
      */
@@ -183,6 +184,7 @@ class Interactor
         $default = null,
         ?callable $callback = null,
         int $retry = 3,
+        bool $required = true,
         bool $hidden = false
     ) {
         $error = 'Invalid value, please try again';
@@ -203,7 +205,7 @@ class Interactor
             $error = $ex->getMessage();
         }
 
-        if ($retry > 0 && $input === '') {
+        if ($retry > 0 && $required && $input === '') {
             $this->writer->bgRed($error, true);
 
             return $this->prompt($text, $default, $callback, $retry - 1, $hidden);
@@ -218,14 +220,16 @@ class Interactor
      * @param string $text
      * @param callable|null $callback
      * @param int $retry
+     * @param bool $required
      * @return mixed
      */
     public function promptHidden(
         string $text,
         ?callable $callback = null,
-        int $retry = 3
+        int $retry = 3,
+        bool $required = true
     ) {
-        return $this->prompt($text, null, $callback, $retry, true);
+        return $this->prompt($text, null, $callback, $retry, $required, true);
     }
 
     /**
