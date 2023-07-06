@@ -83,7 +83,7 @@ class Reader
     public function read($default = null, ?callable $callback = null)
     {
         // see https://www.php.net/manual/en/filesystem.configuration.php#ini.auto-detect-line-endings
-        ini_set('auto_detect_line_endings', true);
+        ini_set('auto_detect_line_endings', 'true');
         $input = '';
         $read = fgets($this->stream);
 
