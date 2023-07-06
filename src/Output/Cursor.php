@@ -54,7 +54,6 @@ namespace Platine\Console\Output;
  */
 class Cursor
 {
-
     /**
      * Returns signal to move cursor up "count" times.
      * @param int $count

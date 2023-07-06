@@ -15,7 +15,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class CursorTest extends PlatineTestCase
 {
-
     /**
      * @dataProvider methodsWithOneParamProvider
      *

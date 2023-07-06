@@ -16,7 +16,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class ReaderTest extends PlatineTestCase
 {
-
     protected $vfsRoot;
     protected $vfsPath;
 

@@ -57,7 +57,6 @@ use Platine\Console\Input\Parameter;
  */
 class Helper
 {
-
     /**
      * Convert the given string to camel case
      * @param string $str

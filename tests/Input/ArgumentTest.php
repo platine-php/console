@@ -15,7 +15,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class ArgumentTest extends PlatineTestCase
 {
-
     public function testConstructorDefault(): void
     {
         $s = new Argument('src');

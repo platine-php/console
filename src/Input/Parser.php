@@ -58,7 +58,6 @@ use Platine\Console\Util\Helper;
  */
 abstract class Parser
 {
-
     /**
      * The last seen variadic option name
      * @var string|null

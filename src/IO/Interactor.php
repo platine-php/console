@@ -49,7 +49,6 @@ declare(strict_types=1);
 namespace Platine\Console\IO;
 
 use Platine\Console\Input\Reader;
-use Platine\Console\Output\Color;
 use Platine\Console\Output\Writer;
 use Platine\Console\Util\Helper;
 use Throwable;
@@ -60,7 +59,6 @@ use Throwable;
  */
 class Interactor
 {
-
     /**
      * Stream reader instance
      * @var Reader

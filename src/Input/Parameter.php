@@ -56,7 +56,6 @@ use Platine\Console\Util\Helper;
  */
 abstract class Parameter
 {
-
     /**
      * The name of the parameter
      * @var string

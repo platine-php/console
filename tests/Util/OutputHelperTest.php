@@ -27,7 +27,6 @@ use function Platine\Test\Fixture\Console\printStackException;
  */
 class OutputHelperTest extends PlatineTestCase
 {
-
     protected $vfsRoot;
     protected $vfsPath;
 
@@ -115,7 +114,6 @@ class OutputHelperTest extends PlatineTestCase
         $s = new OutputHelper($writer);
 
         $s->printTrace(new class () extends ConsoleException{
-
         });
 
         $stdout = $this->getOutputContent();

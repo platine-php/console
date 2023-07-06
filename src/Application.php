@@ -61,7 +61,6 @@ use Throwable;
  */
 class Application
 {
-
     /**
      * List of commands
      * @var array<Command>

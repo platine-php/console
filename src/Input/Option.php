@@ -54,7 +54,6 @@ namespace Platine\Console\Input;
  */
 class Option extends Parameter
 {
-
     /**
      * The short option name
      * @var string

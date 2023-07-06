@@ -16,7 +16,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class ColorTest extends PlatineTestCase
 {
-
     /**
      * @dataProvider methodsWithOneRequiredParamProvider
      *

@@ -20,7 +20,6 @@ use Platine\Test\Fixture\Console\MyParser;
  */
 class ParserTest extends PlatineTestCase
 {
-
     public function testParseEmpty(): void
     {
         $s = new MyParser();

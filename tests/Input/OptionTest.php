@@ -15,7 +15,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class OptionTest extends PlatineTestCase
 {
-
     public function testConstructorDefault(): void
     {
         $s = new Option('-p|--port');

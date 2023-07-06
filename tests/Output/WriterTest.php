@@ -19,7 +19,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class WriterTest extends PlatineTestCase
 {
-
     protected $vfsRoot;
     protected $vfsPath;
 

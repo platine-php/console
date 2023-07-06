@@ -54,7 +54,6 @@ namespace Platine\Console\Input;
  */
 class Argument extends Parameter
 {
-
     /**
      * {@inheritdoc}
      */

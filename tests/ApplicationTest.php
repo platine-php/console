@@ -23,7 +23,6 @@ use Platine\Test\Fixture\Console\MyCommandExecuteThrowException;
  */
 class ApplicationTest extends PlatineTestCase
 {
-
     protected $vfsRoot;
     protected $vfsPath;
 

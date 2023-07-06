@@ -62,7 +62,6 @@ use Throwable;
  */
 class OutputHelper
 {
-
     /**
      * The writer stream instance
      * @var Writer

@@ -16,7 +16,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class TableTest extends PlatineTestCase
 {
-
     public function testRenderDefault(): void
     {
         $o = new Table();

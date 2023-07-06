@@ -67,7 +67,6 @@ class MyToStringClass
 
 class MyColor extends Color
 {
-
     public function line(
         string $text,
         ?int $fg = self::WHITE,

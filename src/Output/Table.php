@@ -57,7 +57,6 @@ use Platine\Console\Util\Helper;
  */
 class Table
 {
-
     /**
      * Render table data
      * @param array<int, array<int, array<string, string>>> $rows

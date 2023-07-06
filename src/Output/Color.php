@@ -611,7 +611,6 @@ use Error;
 */
 class Color
 {
-
     /**
      * The color constants
      */

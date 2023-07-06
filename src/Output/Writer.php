@@ -609,7 +609,6 @@ namespace Platine\Console\Output;
  */
 class Writer
 {
-
     /**
      * The output stream
      * @var resource

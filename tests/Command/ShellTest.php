@@ -16,8 +16,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class ShellTest extends PlatineTestCase
 {
-
-
     public function testConstructorProcOpenNotExists(): void
     {
         global $mock_function_exists_to_false;

@@ -17,7 +17,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class HelperTest extends PlatineTestCase
 {
-
     /**
      * @dataProvider toCamelCaseDataProvider
      *

@@ -66,7 +66,6 @@ use Platine\Console\Util\OutputHelper;
  */
 class Command extends Parser
 {
-
     /**
      * The command version
      * @var string

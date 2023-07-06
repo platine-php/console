@@ -19,7 +19,6 @@ use Platine\Dev\PlatineTestCase;
  */
 class InteractorTest extends PlatineTestCase
 {
-
     protected $vfsRoot;
     protected $vfsPath;
 

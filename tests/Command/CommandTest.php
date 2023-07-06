@@ -27,7 +27,6 @@ use stdClass;
  */
 class CommandTest extends PlatineTestCase
 {
-
     protected $vfsRoot;
     protected $vfsPath;
 
