@@ -101,6 +101,29 @@ class Interactor
     }
 
     /**
+     * Set the reader
+     * @param Reader $reader
+     * @return $this
+     */
+    public function setReader(Reader $reader): self
+    {
+        $this->reader = $reader;
+        return $this;
+    }
+
+    /**
+     * Set the writer
+     * @param Writer $writer
+     * @return $this
+     */
+    public function setWriter(Writer $writer): self
+    {
+        $this->writer = $writer;
+        return $this;
+    }
+
+
+    /**
      * Confirms if user agrees to prompt as indicated by given text.
      * @param string $text
      * @param string $default

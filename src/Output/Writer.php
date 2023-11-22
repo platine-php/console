@@ -657,7 +657,7 @@ class Writer
         $this->color = $color ?? new Color();
         $this->cursor = new Cursor();
     }
-    
+
     /**
      * Set the stream
      * @param resource $stream
@@ -668,7 +668,7 @@ class Writer
         $this->stream = $stream;
         return $this;
     }
-    
+
     /**
      * Set the error stream
      * @param resource $stream

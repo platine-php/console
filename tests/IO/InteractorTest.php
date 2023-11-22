@@ -53,6 +53,16 @@ class InteractorTest extends PlatineTestCase
 
         $this->assertInstanceOf(Reader::class, $s->reader());
         $this->assertInstanceOf(Writer::class, $s->writer());
+
+        $reader = new Reader($input);
+        $s->setReader($reader);
+
+        $this->assertEquals($reader, $s->reader());
+
+        $writer = new Writer($output);
+        $s->setWriter($writer);
+
+        $this->assertEquals($writer, $s->writer());
     }
 
     public function testConfirmYesUsingDefault(): void

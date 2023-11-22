@@ -39,12 +39,12 @@ class WriterTest extends PlatineTestCase
         $this->assertInstanceOf(Color::class, $o->getColor());
         $this->assertInstanceOf(Cursor::class, $o->getCursor());
     }
-    
+
     public function testSetStream(): void
     {
         $o = new Writer($this->vfsOutputStream->url());
         $stream = fopen($this->vfsOutputStream->url(), 'w');
-        
+
         $o->setStream($stream);
         $o->setErrorStream($stream);
 

@@ -73,7 +73,7 @@ class Reader
 
         $this->stream = $stream;
     }
-    
+
     /**
      * Set the stream
      * @param resource $stream
@@ -85,7 +85,7 @@ class Reader
         return $this;
     }
 
-    
+
     /**
      * Read the user input
      * @param mixed $default
