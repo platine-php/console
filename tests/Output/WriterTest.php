@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Platine\Test\Console\Output;
 
-use Error;
 use org\bovigo\vfs\vfsStream;
 use Platine\Console\Output\Color;
 use Platine\Console\Output\Cursor;
@@ -39,6 +38,18 @@ class WriterTest extends PlatineTestCase
 
         $this->assertInstanceOf(Color::class, $o->getColor());
         $this->assertInstanceOf(Cursor::class, $o->getCursor());
+    }
+    
+    public function testSetStream(): void
+    {
+        $o = new Writer($this->vfsOutputStream->url());
+        $stream = fopen($this->vfsOutputStream->url(), 'w');
+        
+        $o->setStream($stream);
+        $o->setErrorStream($stream);
+
+        $this->assertEquals($stream, $this->getPropertyValue(Writer::class, $o, 'stream'));
+        $this->assertEquals($stream, $this->getPropertyValue(Writer::class, $o, 'errorStream'));
     }
 
     public function testWriteInline(): void

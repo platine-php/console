@@ -39,7 +39,7 @@
  *  @author Platine Developers Team
  *  @copyright  Copyright (c) 2020
  *  @license    http://opensource.org/licenses/MIT  MIT License
- *  @link   http://www.iacademy.cf
+ *  @link   https://www.platine-php.com
  *  @version 1.0.0
  *  @filesource
  */
@@ -73,7 +73,19 @@ class Reader
 
         $this->stream = $stream;
     }
+    
+    /**
+     * Set the stream
+     * @param resource $stream
+     * @return $this
+     */
+    public function setStream($stream)
+    {
+        $this->stream = $stream;
+        return $this;
+    }
 
+    
     /**
      * Read the user input
      * @param mixed $default

@@ -36,6 +36,16 @@ class ReaderTest extends PlatineTestCase
 
         $this->assertInstanceOf(Reader::class, $o);
     }
+    
+    public function testSetStream(): void
+    {
+        $o = new Reader($this->vfsInputStream->url());
+        $stream = fopen($this->vfsInputStream->url(), 'r');
+        
+        $o->setStream($stream);
+        
+        $this->assertEquals($stream, $this->getPropertyValue(Reader::class, $o, 'stream'));
+    }
 
     public function testReadSimple(): void
     {
