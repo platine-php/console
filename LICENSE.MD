@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2021 Platine
+Copyright (c) 2020 Platine Console
+Copyright (c) 2017-2020 Jitendra Adhikari
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
