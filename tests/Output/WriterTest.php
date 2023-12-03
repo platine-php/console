@@ -26,7 +26,6 @@ class WriterTest extends PlatineTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        //need setup for each test
         $this->vfsRoot = vfsStream::setup();
         $this->vfsPath = vfsStream::newDirectory('my_tests')->at($this->vfsRoot);
         $this->vfsOutputStream = $this->createVfsFileOnly('stdout', $this->vfsPath);
