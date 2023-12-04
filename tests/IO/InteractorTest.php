@@ -237,7 +237,7 @@ class InteractorTest extends PlatineTestCase
 
     public function testPromptHiddenSuccess(): void
     {
-        $this->createInputContent('TNH');
+        $this->createInputContent(PHP_EOL);
 
         $input = $this->vfsInputStream->url();
         $output = $this->vfsOutputStream->url();
@@ -245,17 +245,9 @@ class InteractorTest extends PlatineTestCase
         $s = new Interactor($input, $output);
 
         $res = $s->promptHidden('Your name?', null);
+        $this->createInputContent('TNH');
 
         $this->assertEquals($res, 'TNH');
-    }
-
-    /**
-     * Return test output stream content
-     * @return string
-     */
-    private function getOutputContent(): string
-    {
-        return $this->vfsOutputStream->getContent();
     }
 
     /**
