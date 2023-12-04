@@ -59,7 +59,7 @@ class WriterTest extends PlatineTestCase
         $o->write($text);
 
         $expected = sprintf("\033[0;37m%s\033[0m", $text);
-        $this->assertEquals($expected, $this->getOutputContent());
+        $this->assertCommandOutput($expected, $this->getOutputContent());
     }
 
     public function testWriteLn(): void
@@ -70,7 +70,7 @@ class WriterTest extends PlatineTestCase
         $o->write($text, true);
 
         $expected = sprintf("\033[0;37m%s\033[0m", $text);
-        $this->assertEquals($expected . "\n", $this->getOutputContent());
+        $this->assertCommandOutput($expected . "\n", $this->getOutputContent());
     }
 
     public function testWriteErrorInline(): void
@@ -81,7 +81,7 @@ class WriterTest extends PlatineTestCase
         $o->writeError($text);
 
         $expected = sprintf("\033[0;31m%s\033[0m", $text);
-        $this->assertEquals($expected, $this->getOutputContent());
+        $this->assertCommandOutput($expected, $this->getOutputContent());
     }
 
     public function testWriteErrorLn(): void
@@ -92,7 +92,7 @@ class WriterTest extends PlatineTestCase
         $o->writeError($text, true);
 
         $expected = sprintf("\033[0;31m%s\033[0m", $text);
-        $this->assertEquals($expected . "\n", $this->getOutputContent());
+        $this->assertCommandOutput($expected . "\n", $this->getOutputContent());
     }
 
     public function testLineInline(): void
@@ -103,7 +103,7 @@ class WriterTest extends PlatineTestCase
         $o->line($text);
 
         $expected = sprintf("\033[0;37m%s\033[0m", $text);
-        $this->assertEquals($expected, $this->getOutputContent());
+        $this->assertCommandOutput($expected, $this->getOutputContent());
     }
 
     public function testLineLn(): void
@@ -114,7 +114,7 @@ class WriterTest extends PlatineTestCase
         $o->line($text, true);
 
         $expected = sprintf("\033[0;37m%s\033[0m", $text);
-        $this->assertEquals($expected . "\n", $this->getOutputContent());
+        $this->assertCommandOutput($expected . "\n", $this->getOutputContent());
     }
 
     public function testLineErrorInline(): void
@@ -125,7 +125,7 @@ class WriterTest extends PlatineTestCase
         $o->lineError($text);
 
         $expected = sprintf("\033[0;37m%s\033[0m", $text);
-        $this->assertEquals($expected, $this->getOutputContent());
+        $this->assertCommandOutput($expected, $this->getOutputContent());
     }
 
     public function testLineErrorLn(): void
@@ -136,7 +136,7 @@ class WriterTest extends PlatineTestCase
         $o->lineError($text, true);
 
         $expected = sprintf("\033[0;37m%s\033[0m", $text);
-        $this->assertEquals($expected . "\n", $this->getOutputContent());
+        $this->assertCommandOutput($expected . "\n", $this->getOutputContent());
     }
 
     public function testEol(): void
@@ -180,7 +180,7 @@ class WriterTest extends PlatineTestCase
         $expected = 'my_table
 ';
 
-        $this->assertEquals($expected, $this->getOutputContent());
+        $this->assertCommandOutput($expected, $this->getOutputContent());
     }
 
     /**
@@ -200,7 +200,7 @@ class WriterTest extends PlatineTestCase
 
         $expected = sprintf("\033[%sm%s\033[0m", $result, $text);
 
-        $this->assertEquals($res, $expected);
+        $this->assertCommandOutput($res, $expected);
     }
 
     public function testFgColorLn(): void
@@ -213,7 +213,7 @@ class WriterTest extends PlatineTestCase
 
         $expected = sprintf("\033[0;31m%s\033[0m", $text);
 
-        $this->assertEquals($res, $expected . "\n");
+        $this->assertCommandOutput($res, $expected . "\n");
     }
 
     public function testModeColorLn(): void
@@ -226,7 +226,7 @@ class WriterTest extends PlatineTestCase
 
         $expected = sprintf("\033[1;37m%s\033[0m", $text);
 
-        $this->assertEquals($res, $expected . "\n");
+        $this->assertCommandOutput($res, $expected . "\n");
     }
 
     public function testBgColorLn(): void
@@ -239,7 +239,7 @@ class WriterTest extends PlatineTestCase
 
         $expected = sprintf("\033[0;37;41m%s\033[0m", $text);
 
-        $this->assertEquals($res, $expected . "\n");
+        $this->assertCommandOutput($res, $expected . "\n");
     }
 
     public function testColorsSame(): void
@@ -278,7 +278,7 @@ class WriterTest extends PlatineTestCase
 
         $expected = sprintf("\033[%sm%s\033[0m", '0;31', 'foobar');
 
-        $this->assertEquals($res, $expected . "\n");
+        $this->assertCommandOutput($res, $expected . "\n");
     }
 
     public function testCursorMethod(): void

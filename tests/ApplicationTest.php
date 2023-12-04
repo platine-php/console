@@ -113,7 +113,7 @@ class ApplicationTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My Logo]
+        $this->assertCommandOutput('[My Logo]
 [My app, version 19.2]
 
 [Commands:]
@@ -201,7 +201,7 @@ class ApplicationTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[Option "--port" is required]
+        $this->assertCommandOutput('[Option "--port" is required]
 ', $stdout);
     }
 
@@ -257,7 +257,7 @@ class ApplicationTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My app, version 19.2]
+        $this->assertCommandOutput('[My app, version 19.2]
 
 [Commands:]
 [cmd c    ][My cmd]
@@ -286,7 +286,7 @@ class ApplicationTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[Command "cmd" not found]
+        $this->assertCommandOutput('[Command "cmd" not found]
 ', $stdout);
     }
 

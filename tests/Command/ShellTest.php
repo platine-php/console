@@ -28,8 +28,9 @@ class ShellTest extends PlatineTestCase
 
     public function testSetInput(): void
     {
-        global $mock_function_exists_to_true;
+        global $mock_function_exists_to_true, $mock_fwrite_to_int;
         $mock_function_exists_to_true = true;
+        $mock_fwrite_to_int = true;
 
         $s = new Shell();
         $s->setInput('foo');
@@ -38,6 +39,10 @@ class ShellTest extends PlatineTestCase
             'foo',
             $this->getPropertyValue(Shell::class, $s, 'input')
         );
+
+        $this->setPropertyValue(Shell::class, $s, 'pipes', [0]);
+        $res = $this->runPrivateProtectedMethod($s, 'writeInput', []);
+        $this->assertEquals($res, '');
     }
 
     public function testSetInputNull(): void

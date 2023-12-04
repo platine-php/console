@@ -237,7 +237,9 @@ class InteractorTest extends PlatineTestCase
 
     public function testPromptHiddenSuccess(): void
     {
-        $this->createInputContent(PHP_EOL);
+        global $mock_shell_exec_to_foo;
+        $mock_shell_exec_to_foo = true;
+        $this->createInputContent('foo');
 
         $input = $this->vfsInputStream->url();
         $output = $this->vfsOutputStream->url();
@@ -245,9 +247,8 @@ class InteractorTest extends PlatineTestCase
         $s = new Interactor($input, $output);
 
         $res = $s->promptHidden('Your name?', null);
-        $this->createInputContent('TNH');
 
-        $this->assertEquals($res, 'TNH');
+        $this->assertEquals($res, 'foo');
     }
 
     /**

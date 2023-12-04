@@ -36,7 +36,7 @@ class TableTest extends PlatineTestCase
 +------------+----+------+
 ';
 
-        $this->assertEquals($res, $expected);
+        $this->assertCommandOutput($res, $expected);
     }
 
     public function testRenderUsingStyle(): void
@@ -62,7 +62,7 @@ class TableTest extends PlatineTestCase
 +------------+----+------+
 ';
 
-        $this->assertEquals($res, $expected);
+        $this->assertCommandOutput($res, $expected);
     }
 
     public function testRenderEmpty(): void

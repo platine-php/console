@@ -172,7 +172,9 @@ class ReaderTest extends PlatineTestCase
 
     public function testReadHidden(): void
     {
-        $text = 'tnh';
+        global $mock_shell_exec_to_foo;
+        $mock_shell_exec_to_foo = true;
+        $text = 'foo';
         $this->createInputContent($text);
 
         $o = new Reader($this->vfsInputStream->url());
@@ -181,12 +183,18 @@ class ReaderTest extends PlatineTestCase
 
     public function testReadHiddenDefaultValue(): void
     {
+        global $mock_shell_exec_to_foo;
+        $mock_shell_exec_to_foo = true;
+
         $o = new Reader($this->vfsInputStream->url());
         $this->assertEquals('foo', $o->readHidden('foo'));
     }
 
     public function testReadHiddenWithCallaback(): void
     {
+        global $mock_shell_exec_to_foo;
+        $mock_shell_exec_to_foo = true;
+
         $text = 'tnh';
         $this->createInputContent($text);
 

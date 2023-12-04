@@ -177,7 +177,7 @@ class Reader
      * Read a line from configured stream (or terminal)
      *  in  windows Os but don't echo it back.
      * @param mixed $default
-     * @param callable|null $callback The validator/sanitizer callback.
+     * @param callable|null $callback The validation/sanitizer callback.
      * @return mixed
      */
     protected function readHiddenWindows($default = null, ?callable $callback = null)

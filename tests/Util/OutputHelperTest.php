@@ -145,7 +145,7 @@ class OutputHelperTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My header]
+        $this->assertCommandOutput('[My header]
 
 [Arguments:]
 [[bar]    ][bar desc]
@@ -176,7 +176,7 @@ class OutputHelperTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My header]
+        $this->assertCommandOutput('[My header]
 
 [Options:]
 [[f|foo]    ][foo desc]
@@ -207,7 +207,7 @@ class OutputHelperTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My header]
+        $this->assertCommandOutput('[My header]
 
 [Options:]
 [<f|foo>    ][foo desc]
@@ -232,7 +232,7 @@ class OutputHelperTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My header]
+        $this->assertCommandOutput('[My header]
 
 [Commands:]
 [My cmd    ][Cmd desc]
@@ -255,7 +255,7 @@ class OutputHelperTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[My header]
+        $this->assertCommandOutput('[My header]
 
 [Commands:]
 [  (n/a)]
@@ -276,7 +276,7 @@ class OutputHelperTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('
+        $this->assertCommandOutput('
 [Usage Examples: ]
 My usage text
 ', $stdout);
@@ -316,7 +316,7 @@ My usage text
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('
+        $this->assertCommandOutput('
 [Usage Examples: ]
 My usage text
  Example  # cd foo
@@ -337,7 +337,7 @@ My usage text
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[Command "f" not found]
+        $this->assertCommandOutput('[Command "f" not found]
 
 [Did you mean fun ?]
 ', $stdout);

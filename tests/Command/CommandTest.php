@@ -182,7 +182,7 @@ class CommandTest extends PlatineTestCase
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[Command cmd, version ]
+        $this->assertCommandOutput('[Command cmd, version ]
 
 [My command]
 
@@ -228,7 +228,7 @@ My usage
 
         $stdout = $this->getOutputContent();
 
-        $this->assertEquals('[cmd, 1.4.5]
+        $this->assertCommandOutput('[cmd, 1.4.5]
 ', $stdout);
     }
 
