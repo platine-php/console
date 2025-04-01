@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Platine\Test\Console\Output;
 
 use org\bovigo\vfs\vfsStream;
+use Platine\Console\Exception\RuntimeException;
 use Platine\Console\Output\Color;
 use Platine\Console\Output\Cursor;
 use Platine\Console\Output\Writer;
@@ -37,6 +38,17 @@ class WriterTest extends PlatineTestCase
 
         $this->assertInstanceOf(Color::class, $o->getColor());
         $this->assertInstanceOf(Cursor::class, $o->getCursor());
+    }
+
+    public function testConstructorInvalidResourcePath(): void
+    {
+        global $mock_fopen_to_false;
+
+        $mock_fopen_to_false = true;
+        $this->expectException(RuntimeException::class);
+        $o = new Writer('foo');
+
+        $this->assertInstanceOf(Color::class, $o->getColor());
     }
 
     public function testSetStream(): void

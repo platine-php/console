@@ -53,7 +53,7 @@ use Platine\Console\Exception\RuntimeException;
 use Platine\Console\Util\Helper;
 
 /**
- * Class Parser
+ * @class Parser
  * @package Platine\Console\Input
  */
 abstract class Parser
@@ -126,7 +126,7 @@ abstract class Parser
 
     /**
      * Return all options.
-     * @return array<Option>
+     * @return Option[]
      */
     public function options(): array
     {
@@ -135,7 +135,7 @@ abstract class Parser
 
     /**
      * Return all arguments.
-     * @return array<Argument>
+     * @return Argument[]
      */
     public function arguments(): array
     {
@@ -144,7 +144,7 @@ abstract class Parser
 
     /**
      * Get the command arguments i.e which is not an option.
-     * @return array<string>
+     * @return string[]
      */
     public function args(): array
     {
@@ -174,7 +174,7 @@ abstract class Parser
      * @param string|null $value is option value
      * @return mixed If true it will indicate that value has been eaten.
      */
-    abstract protected function handleUnknown(string $arg, $value = null);
+    abstract protected function handleUnknown(string $arg, ?string $value = null): mixed;
 
     /**
      * Emit the event with value.
@@ -182,14 +182,14 @@ abstract class Parser
      * @param mixed $value is option value
      * @return mixed
      */
-    abstract protected function emit(string $event, $value = null);
+    abstract protected function emit(string $event, mixed $value = null): mixed;
 
     /**
      * Parse single argument.
      * @param string $arg
      * @return mixed
      */
-    protected function parseArgument(string $arg)
+    protected function parseArgument(string $arg): mixed
     {
         if ($this->lastVariadic) {
             return $this->set($this->lastVariadic, $arg, true);
@@ -207,6 +207,8 @@ abstract class Parser
         if (!$argument->isVariadic()) {
             array_shift($this->arguments);
         }
+
+        return true;
     }
 
     /**
@@ -215,7 +217,7 @@ abstract class Parser
      * @param string|null $nextArg
      * @return mixed|bool
      */
-    protected function parseOptions(string $arg, ?string $nextArg = null)
+    protected function parseOptions(string $arg, ?string $nextArg = null): mixed
     {
         $value = null;
         if ($nextArg !== null && substr($nextArg, 0, 1) !== '-') {
@@ -259,7 +261,7 @@ abstract class Parser
      * @param bool $isVariadic
      * @return bool
      */
-    protected function set($key, $value, bool $isVariadic = false): bool
+    protected function set(mixed $key, mixed $value, bool $isVariadic = false): bool
     {
         if ($key === null) {
             $this->values[] = $value;
@@ -295,11 +297,10 @@ abstract class Parser
      */
     protected function validate(): void
     {
-        /** @var array<Parameter> $missingItems */
+        /** @var Parameter[] $missingItems */
         $missingItems = array_filter(
             $this->options + $this->arguments,
-            function ($item) {
-            /** @var Parameter $item */
+            function (Parameter $item) {
                 return $item->isRequired() && in_array(
                     $this->values[$item->getAttributeName()],
                     [null, []]

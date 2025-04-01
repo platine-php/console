@@ -49,7 +49,7 @@ declare(strict_types=1);
 namespace Platine\Console\Output;
 
 /**
- * Class Cursor
+ * @class Cursor
  * @package Platine\Console\Output
  */
 class Cursor

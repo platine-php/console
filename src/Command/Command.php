@@ -61,7 +61,7 @@ use Platine\Console\Util\Helper;
 use Platine\Console\Util\OutputHelper;
 
 /**
- * Class Command
+ * @class Command
  * @package Platine\Console\Command
  */
 class Command extends Parser
@@ -305,7 +305,6 @@ class Command extends Parser
      * @param string $description
      * @param mixed $default
      * @param bool $required
-     * @param bool $optional
      * @param bool $variadic
      * @param callable|null $filter
      * @return $this
@@ -313,9 +312,8 @@ class Command extends Parser
     public function addOption(
         string $raw,
         string $description,
-        $default = null,
+        mixed $default = null,
         bool $required = false,
-        bool $optional = false,
         bool $variadic = false,
         ?callable $filter = null
     ): self {
@@ -324,7 +322,6 @@ class Command extends Parser
             $description,
             $default,
             $required,
-            $optional,
             $variadic,
             $filter
         );
@@ -339,7 +336,6 @@ class Command extends Parser
      * @param string $description
      * @param mixed $default
      * @param bool $required
-     * @param bool $optional
      * @param bool $variadic
      * @param callable|null $filter
      * @return $this
@@ -347,9 +343,8 @@ class Command extends Parser
     public function addArgument(
         string $raw,
         string $description = '',
-        $default = null,
+        mixed $default = null,
         bool $required = false,
-        bool $optional = false,
         bool $variadic = false,
         ?callable $filter = null
     ): self {
@@ -358,7 +353,6 @@ class Command extends Parser
             $description,
             $default,
             $required,
-            $optional,
             $variadic,
             $filter
         );
@@ -395,7 +389,7 @@ class Command extends Parser
      * Show this command help and abort
      * @return mixed
      */
-    public function showHelp()
+    public function showHelp(): mixed
     {
         $io = $this->io();
         $helper = new OutputHelper($io->writer());
@@ -442,7 +436,7 @@ class Command extends Parser
      * Show this command version and abort
      * @return mixed
      */
-    public function showVersion()
+    public function showVersion(): mixed
     {
         $this->writer()->bold(
             sprintf(
@@ -460,8 +454,9 @@ class Command extends Parser
      * Execute the command
      * @return mixed
      */
-    public function execute()
+    public function execute(): mixed
     {
+        return 0;
     }
 
     /**
@@ -480,7 +475,7 @@ class Command extends Parser
      * @param mixed $object
      * @return mixed
      */
-    public function tap($object = null)
+    public function tap(mixed $object = null): mixed
     {
         return $object ?? $this->app;
     }
@@ -488,7 +483,7 @@ class Command extends Parser
     /**
      * {@inheritdoc}
      */
-    public function emit(string $event, $value = null)
+    public function emit(string $event, mixed $value = null): mixed
     {
         if (empty($this->events[$event])) {
             return null;
@@ -502,7 +497,7 @@ class Command extends Parser
      * @param string $longName
      * @return mixed|null
      */
-    public function getOptionValue(string $longName)
+    public function getOptionValue(string $longName): mixed
     {
         $values = $this->values();
 
@@ -516,7 +511,7 @@ class Command extends Parser
      * @param string $name
      * @return mixed|null
      */
-    public function getArgumentValue(string $name)
+    public function getArgumentValue(string $name): mixed
     {
         $values = $this->values();
 
@@ -550,7 +545,7 @@ class Command extends Parser
     /**
      * {@inheritdoc}
      */
-    protected function handleUnknown(string $arg, $value = null)
+    protected function handleUnknown(string $arg, mixed $value = null): mixed
     {
         if ($this->allowUnknown) {
             return $this->set(Helper::toCamelCase($arg), $value);

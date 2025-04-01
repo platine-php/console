@@ -51,7 +51,7 @@ namespace Platine\Console\Command;
 use Platine\Console\Exception\RuntimeException;
 
 /**
- * Class Shell
+ * @class Shell
  * @package Platine\Console\Command
  */
 class Shell

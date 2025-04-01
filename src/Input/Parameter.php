@@ -51,7 +51,7 @@ namespace Platine\Console\Input;
 use Platine\Console\Util\Helper;
 
 /**
- * Class Parameter
+ * @class Parameter
  * @package Platine\Console\Input
  */
 abstract class Parameter
@@ -93,12 +93,6 @@ abstract class Parameter
     protected bool $required = false;
 
     /**
-     * Whether the parameter is optional
-     * @var bool
-     */
-    protected bool $optional = true;
-
-    /**
      * Whether the parameter is variadic
      * @var bool
      */
@@ -110,7 +104,6 @@ abstract class Parameter
      * @param string $description
      * @param mixed $default
      * @param bool $required
-     * @param bool $optional
      * @param bool $variadic
      * @param callable|null $filter
      */
@@ -119,7 +112,6 @@ abstract class Parameter
         string $description = '',
         $default = null,
         bool $required = false,
-        bool $optional = true,
         bool $variadic = false,
         ?callable $filter = null
     ) {
@@ -129,17 +121,7 @@ abstract class Parameter
         $this->filter = $filter;
         $this->variadic = $variadic;
 
-        //If the parameter is required or optional
-        if ($required && $optional) {
-            $optional = false;
-        }
-
-        if (!$required && !$optional) {
-            $optional = true;
-        }
-
         $this->required = $required;
-        $this->optional = $optional;
 
         $this->parse($raw);
     }
@@ -207,15 +189,6 @@ abstract class Parameter
     public function isRequired(): bool
     {
         return $this->required;
-    }
-
-    /**
-     * Whether the parameter is optional
-     * @return bool
-     */
-    public function isOptional(): bool
-    {
-        return $this->optional;
     }
 
     /**

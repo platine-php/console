@@ -74,7 +74,6 @@ class CommandTest extends PlatineTestCase
             'tmp',
             true,
             false,
-            false,
             function ($val) {
                 return $val;
             }
@@ -108,7 +107,6 @@ class CommandTest extends PlatineTestCase
             'tmp',
             true,
             false,
-            false,
             function ($val) {
                 return $val;
             }
@@ -135,7 +133,6 @@ class CommandTest extends PlatineTestCase
             'My argument',
             'tmp',
             true,
-            false,
             true,
             function ($val) {
                 return $val;
@@ -148,7 +145,6 @@ class CommandTest extends PlatineTestCase
             'My argument',
             'tmp',
             true,
-            false,
             true,
             function ($val) {
                 return $val;

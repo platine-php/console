@@ -52,7 +52,7 @@ use Platine\Console\Exception\InvalidArgumentException;
 use Platine\Console\Util\Helper;
 
 /**
- * Class Table
+ * @class Table
  * @package Platine\Console\Output
  */
 class Table
@@ -66,7 +66,7 @@ class Table
     public function render(array $rows, array $styles = []): string
     {
         $normalizedTable = $this->normalize($rows);
-        if (empty($normalizedTable)) {
+        if (count($normalizedTable) === 0) {
             return '';
         }
 
@@ -94,8 +94,7 @@ class Table
                 . ' ' . $end . '|' . PHP_EOL;
 
         $odd = true;
-        /** @var array<int, array<string, string>> $row */
-        foreach ($tableRows as $row) {
+        foreach ($tableRows as /** @var array<int, array<string, string>> $row */ $row) {
             $parts = [];
             list($start, $end) = $normalizedStyles[['even', 'odd'][(int) $odd]];
             /** @var string $col */
@@ -118,14 +117,14 @@ class Table
 
     /**
      * Normalize table data
-     * @param array<int, array<int, array<string, string>>> $rows
+     * @param array<int, array<mixed>|mixed> $rows
      * @return array<string, array<mixed>>
      */
     protected function normalize(array $rows): array
     {
         $head = reset($rows);
 
-        if ($head === false || empty($head)) {
+        if ($head === false) {
             return [];
         }
 
@@ -136,6 +135,10 @@ class Table
             ));
         }
 
+        if (count($head) === 0) {
+            return [];
+        }
+
         $header = array_fill_keys(array_keys($head), null);
         foreach ($rows as &$row) {
             $row = array_merge($header, $row);
@@ -143,8 +146,9 @@ class Table
 
         /** @var array<string, string> $header */
         foreach ($header as $col => &$value) {
+            /** @var array<string> $cols */
             $cols = array_column($rows, $col);
-            $span = array_map('strlen', $cols);
+            $span = array_map(fn($a) => strlen($a), $cols);
             $span[] = strlen($col);
             $value = max($span);
         }

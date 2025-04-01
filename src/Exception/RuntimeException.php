@@ -35,7 +35,7 @@ declare(strict_types=1);
 namespace Platine\Console\Exception;
 
 /**
- * Class RuntimeException
+ * @class RuntimeException
  * @package Platine\Console\Exception
  */
 class RuntimeException extends ConsoleException

@@ -48,8 +48,10 @@ declare(strict_types=1);
 
 namespace Platine\Console\Input;
 
+use Platine\Console\Exception\RuntimeException;
+
 /**
- * Class Reader
+ * @class Reader
  * @package Platine\Console\Input
  */
 class Reader
@@ -69,6 +71,13 @@ class Reader
         $stream = STDIN;
         if ($path !== null) {
             $stream = fopen($path, 'r');
+
+            if ($stream === false) {
+                throw new RuntimeException(sprintf(
+                    'Can not open stream using path [%s]',
+                    $path
+                ));
+            }
         }
 
         $this->stream = $stream;
@@ -180,12 +189,12 @@ class Reader
      */
     protected function readHiddenWindows($default = null, ?callable $callback = null)
     {
-        $cmd = 'powershell -Command ' . implode('; ', array_filter([
+        $cmd = 'powershell -Command ' . implode('; ', [
                     '$pword = Read-Host -AsSecureString',
                     '$pword = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pword)',
                     '$pword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($pword)',
                     'echo $pword',
-                ]));
+                ]);
 
         $input = '';
         $result = shell_exec($cmd);

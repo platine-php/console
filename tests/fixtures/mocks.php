@@ -2,6 +2,21 @@
 
 declare(strict_types=1);
 
+namespace Platine\Console\Output;
+
+$mock_fopen_to_false = false;
+
+function fopen(string $string, string $mode)
+{
+    global $mock_fopen_to_false;
+    if ($mock_fopen_to_false) {
+        return false;
+    }
+
+    return \fopen($string, $mode);
+}
+
+
 namespace Platine\Console\Util;
 
 $mock_explode_to_false = false;
@@ -240,6 +255,17 @@ $mock_strtoupper_to_WIN = false;
 $mock_shell_exec_to_null = false;
 $mock_shell_exec_to_foo = false;
 $mock_stream_select_to_one = false;
+$mock_fopen_to_false = false;
+
+function fopen(string $string, string $mode)
+{
+    global $mock_fopen_to_false;
+    if ($mock_fopen_to_false) {
+        return false;
+    }
+
+    return \fopen($string, $mode);
+}
 
 function stream_select(array &$read, array &$write, array &$except, int $tv_sec)
 {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Platine\Test\Console\Input;
 
 use org\bovigo\vfs\vfsStream;
+use Platine\Console\Exception\RuntimeException;
 use Platine\Console\Input\Reader;
 use Platine\Dev\PlatineTestCase;
 
@@ -33,6 +34,17 @@ class ReaderTest extends PlatineTestCase
     public function testConstructorDefault(): void
     {
         $o = new Reader($this->vfsInputStream->url());
+
+        $this->assertInstanceOf(Reader::class, $o);
+    }
+
+    public function testConstructorInvalidResourcePath(): void
+    {
+        global $mock_fopen_to_false;
+
+        $mock_fopen_to_false = true;
+        $this->expectException(RuntimeException::class);
+        $o = new Reader('foo');
 
         $this->assertInstanceOf(Reader::class, $o);
     }

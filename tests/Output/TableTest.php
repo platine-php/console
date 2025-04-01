@@ -73,6 +73,14 @@ class TableTest extends PlatineTestCase
         $this->assertEmpty($res);
     }
 
+    public function testRenderHeaderEmpty(): void
+    {
+        $o = new Table();
+        $res = $o->render([[]]);
+
+        $this->assertEmpty($res);
+    }
+
     public function testRenderWrongData(): void
     {
         $o = new Table();

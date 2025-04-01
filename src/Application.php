@@ -56,14 +56,14 @@ use Platine\Console\Util\OutputHelper;
 use Throwable;
 
 /**
- * Class Application
+ * @class Application
  * @package Platine\Console
  */
 class Application
 {
     /**
      * List of commands
-     * @var array<Command>
+     * @var Command[]
      */
     protected array $commands = [];
 
@@ -123,7 +123,7 @@ class Application
         $this->name = $name;
         $this->version = $version;
 
-        $this->onExit = $onExit ? $onExit : function (int $exitCode = 0) {
+        $this->onExit = $onExit ?? function (int $exitCode = 0) {
             //@codeCoverageIgnoreStart
             exit($exitCode);
             //@codeCoverageIgnoreEnd
@@ -299,8 +299,8 @@ class Application
      */
     public function io(?Interactor $io = null): Interactor
     {
-        if ($io || !$this->io) {
-            $this->io = $io ? $io : new Interactor();
+        if ($io || $this->io === null) {
+            $this->io = $io ?? new Interactor();
         }
 
         return $this->io;
@@ -345,8 +345,6 @@ class Application
             return $this->showHelp();
         }
 
-        $exitCode = 255;
-
         try {
             $command = $this->parse($argv);
             $result = $this->executeCommand($command);
@@ -360,14 +358,14 @@ class Application
             }
         }
 
-        return ($this->onExit)($exitCode);
+        return ($this->onExit)(isset($exitCode) ? $exitCode : 255);
     }
 
     /**
      * Show help of all commands.
      * @return mixed
      */
-    public function showHelp()
+    public function showHelp(): mixed
     {
         $writer = $this->io()->writer();
 
@@ -418,7 +416,7 @@ class Application
      * @param Command $command
      * @return mixed
      */
-    protected function executeCommand(Command $command)
+    protected function executeCommand(Command $command): mixed
     {
         if ($command->getName() === '__default__') {
             return $this->showCommandNotFound();
@@ -446,7 +444,7 @@ class Application
      * Command not found handler.
      * @return mixed
      */
-    protected function showCommandNotFound()
+    protected function showCommandNotFound(): mixed
     {
         $available = array_keys($this->getCommands() + $this->aliases);
 

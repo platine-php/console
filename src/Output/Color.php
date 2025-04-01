@@ -51,7 +51,7 @@ namespace Platine\Console\Output;
 use Error;
 
 /**
- * Class Color
+ * @class Color
  * @package Platine\Console\Output
  *
  * @method string bold(string $text)
@@ -762,10 +762,10 @@ class Color
      * Magic call to handle dynamic color, style
      * @param string $method
      * @param array<int, mixed> $args
-     * @return mixed
+     * @return string
      * @throws Error
      */
-    public function __call(string $method, array $args = [])
+    public function __call(string $method, array $args = []): string
     {
         $colors = [
             'black' => self::BLACK,

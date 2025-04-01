@@ -35,7 +35,7 @@ declare(strict_types=1);
 namespace Platine\Console\Exception;
 
 /**
- * Class InvalidParameterException
+ * @class InvalidParameterException
  * @package Platine\Console\Exception
  */
 class InvalidParameterException extends ConsoleException

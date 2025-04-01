@@ -50,14 +50,14 @@ namespace Platine\Console\Util;
 
 use Platine\Console\Command\Command;
 use Platine\Console\Exception\ConsoleException;
+use Platine\Console\Input\Argument;
 use Platine\Console\Input\Option;
 use Platine\Console\Input\Parameter;
-use Platine\Console\Output\Color;
 use Platine\Console\Output\Writer;
 use Throwable;
 
 /**
- * Class OutputHelper
+ * @class OutputHelper
  * @package Platine\Console\Util
  */
 class OutputHelper
@@ -80,7 +80,7 @@ class OutputHelper
      */
     public function __construct(?Writer $writer = null)
     {
-        $this->writer = $writer ? $writer : new Writer();
+        $this->writer = $writer ?? new Writer();
     }
 
     /**
@@ -135,7 +135,7 @@ class OutputHelper
 
     /**
      * Show arguments help
-     * @param array<\Platine\Console\Input\Argument> $items
+     * @param Argument[] $items
      * @param string $header
      * @param string $footer
      * @return $this
@@ -152,7 +152,7 @@ class OutputHelper
 
      /**
      * Show options help
-     * @param array<Option> $items
+     * @param Option[] $items
      * @param string $header
      * @param string $footer
      * @return $this
@@ -169,7 +169,7 @@ class OutputHelper
 
     /**
      * Show commands help
-     * @param array<Command> $items
+     * @param Command[] $items
      * @param string $header
      * @param string $footer
      * @return $this
@@ -226,7 +226,11 @@ class OutputHelper
             }
         }
 
-        $maxLength = (int) max($lines) + 4;
+        $maxLength = 0;
+        if (count($lines) > 0) {
+            $maxLength = (int) max($lines) + 4;
+        }
+
         $formatedUsage = (string) preg_replace_callback(
             '~ ## ~',
             function () use (&$lines, $maxLength) {
@@ -302,7 +306,7 @@ class OutputHelper
      * @param mixed $arg
      * @return string
      */
-    protected function stringifyArg($arg): string
+    protected function stringifyArg(mixed $arg): string
     {
         if (is_scalar($arg)) {
             return var_export($arg, true);
@@ -325,7 +329,7 @@ class OutputHelper
      * Show help for given type (option, argument, command)
      * with header and footer
      * @param string $type
-     * @param array<Parameter|Command> $items
+     * @param Parameter[]|Command[] $items
      * @param string $header
      * @param string $footer
      * @return void
@@ -336,7 +340,7 @@ class OutputHelper
         string $header = '',
         string $footer = ''
     ): void {
-        if ($header) {
+        if (!empty($header)) {
             $this->writer->bold($header, true);
         }
 
@@ -345,7 +349,7 @@ class OutputHelper
             true
         );
 
-        if (empty($items)) {
+        if (count($items) === 0) {
             $this->writer->bold('  (n/a)', true);
 
             return;
@@ -370,26 +374,29 @@ class OutputHelper
             $this->writer->dim($desc, true);
         }
 
-        if ($footer) {
+        if (!empty($footer)) {
             $this->writer->eol()->yellow($footer, true);
         }
     }
 
     /**
      * Sort items by name. As a side effect sets max length of all names.
-     * @param array<Command|Parameter> $items
+     * @param Command[]|Parameter[] $items
      * @param int $max
-     * @return array<Command|Parameter>
+     * @return Command[]|Parameter[]
      */
     protected function sortItems(array $items, int &$max = 0): array
     {
-        $max = max(array_map(function ($item) {
+        $results = array_map(function ($item) {
             return strlen($this->getName($item));
-        }, $items));
+        }, $items);
 
-        uasort($items, function ($a, $b) {
-            /* @var Parameter $b */
-            /* @var Parameter $a */
+        $max = 0;
+        if (count($results) > 0) {
+            $max = max($results);
+        }
+
+        uasort($items, function (Parameter|Command $a, Parameter|Command $b) {
             return $a->getName() <=> $b->getName();
         });
 
@@ -401,7 +408,7 @@ class OutputHelper
      * @param Parameter|Command $item
      * @return string
      */
-    protected function getName($item): string
+    protected function getName(Parameter|Command $item): string
     {
         $name = $item->getName();
         if ($item instanceof Command) {

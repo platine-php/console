@@ -48,8 +48,10 @@ declare(strict_types=1);
 
 namespace Platine\Console\Output;
 
+use Platine\Console\Exception\RuntimeException;
+
 /**
- * Class Writer
+ * @class Writer
  * @package Platine\Console\Output
  *
  * @method Writer bold(string $text, bool $eol = false)
@@ -649,6 +651,13 @@ class Writer
         $stream = null;
         if ($path !== null) {
             $stream = fopen($path, 'w');
+
+            if ($stream === false) {
+                throw new RuntimeException(sprintf(
+                    'Can not open stream using path [%s]',
+                    $path
+                ));
+            }
         }
 
         $this->stream = $stream ?? STDOUT;
@@ -663,7 +672,7 @@ class Writer
      * @param resource $stream
      * @return $this
      */
-    public function setStream($stream)
+    public function setStream($stream): self
     {
         $this->stream = $stream;
         return $this;
@@ -674,7 +683,7 @@ class Writer
      * @param resource $stream
      * @return $this
      */
-    public function setErrorStream($stream)
+    public function setErrorStream($stream): self
     {
         $this->errorStream = $stream;
         return $this;
@@ -792,9 +801,9 @@ class Writer
      * Magic call to handle dynamic color, style
      * @param string $method
      * @param array<int, mixed> $args
-     * @return $this
+     * @return $this|string
      */
-    public function __call(string $method, array $args = [])
+    public function __call(string $method, array $args = []): self|string
     {
         if (method_exists($this->cursor, $method)) {
             return $this->cursor->{$method}(...$args);

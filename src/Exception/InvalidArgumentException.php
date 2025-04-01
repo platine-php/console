@@ -35,7 +35,7 @@ declare(strict_types=1);
 namespace Platine\Console\Exception;
 
 /**
- * Class InvalidArgumentException
+ * @class InvalidArgumentException
  * @package Platine\Console\Exception
  */
 class InvalidArgumentException extends ConsoleException

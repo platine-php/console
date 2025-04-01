@@ -54,7 +54,7 @@ use Platine\Console\Util\Helper;
 use Throwable;
 
 /**
- * Class Interactor
+ * @class Interactor
  * @package Platine\Console\IO
  */
 class Interactor
@@ -145,8 +145,12 @@ class Interactor
      *
      * @return mixed
      */
-    public function choice(string $text, array $choices, $default = null, bool $case = false)
-    {
+    public function choice(
+        string $text,
+        array $choices,
+        mixed $default = null,
+        bool $case = false
+    ): mixed {
         $this->writer->yellow($text);
 
         $this->listOptions($choices, $default, false);
@@ -167,8 +171,12 @@ class Interactor
      *
      * @return mixed
      */
-    public function choices(string $text, array $choices, $default = null, bool $case = false)
-    {
+    public function choices(
+        string $text,
+        array $choices,
+        mixed $default = null,
+        bool $case = false
+    ): mixed {
         $this->writer->yellow($text);
 
         $this->listOptions($choices, $default, true);
@@ -201,11 +209,11 @@ class Interactor
      */
     public function prompt(
         string $text,
-        $default = null,
+        mixed $default = null,
         ?callable $callback = null,
         bool $required = true,
         bool $hidden = false
-    ) {
+    ): mixed {
         $error = 'Invalid value, please try again';
         $readFunct = ['read', 'readHidden'][(int) $hidden];
 
@@ -245,7 +253,7 @@ class Interactor
         string $text,
         ?callable $callback = null,
         bool $required = true
-    ) {
+    ): mixed {
         return $this->prompt($text, null, $callback, $required, true);
     }
 
@@ -258,14 +266,18 @@ class Interactor
      */
     protected function listOptions(
         array $choices,
-        $default = null,
+        mixed $default = null,
         bool $isMutliple = false
     ): self {
         if (!Helper::isAssocArray($choices)) {
             return $this->promptOptions($choices, $default);
         }
 
-        $maxLength = max(array_map('strlen', array_keys($choices)));
+        $maxLength = 0;
+        $results = array_map(fn($a) => strlen((string) $a), array_keys($choices));
+        if (count($results) > 0) {
+            $maxLength = max($results);
+        }
 
         foreach ($choices as $choice => $desc) {
             $this->writer->eol()
@@ -292,7 +304,7 @@ class Interactor
      * @param mixed $default
      * @return $this
      */
-    protected function promptOptions(array $choices, $default): self
+    protected function promptOptions(array $choices, mixed $default): self
     {
         $options = '';
 

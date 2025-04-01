@@ -49,7 +49,7 @@ declare(strict_types=1);
 namespace Platine\Console\Input;
 
 /**
- * Class Argument
+ * @class Argument
  * @package Platine\Console\Input
  */
 class Argument extends Parameter
@@ -67,9 +67,7 @@ class Argument extends Parameter
         if (strpos($name, ':') !== false) {
             $name = str_replace('+', ' ', $name);
             $parts = explode(':', $name, 2);
-            if ($parts !== false) {
-                list($this->name, $this->default) = $parts;
-            }
+            list($this->name, $this->default) = $parts;
         }
 
         $this->prepareDefault();

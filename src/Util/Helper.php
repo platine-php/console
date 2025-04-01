@@ -52,7 +52,7 @@ use Platine\Console\Input\Option;
 use Platine\Console\Input\Parameter;
 
 /**
- * Class Helper
+ * @class Helper
  * @package Platine\Console\Util
  */
 class Helper
@@ -122,7 +122,7 @@ class Helper
      * @param string|null $value
      * @return mixed
      */
-    public static function normalizeValue(Parameter $parameter, ?string $value = null)
+    public static function normalizeValue(Parameter $parameter, ?string $value = null): mixed
     {
         if ($parameter instanceof Option && $parameter->isBool()) {
             return !$parameter->getDefault();

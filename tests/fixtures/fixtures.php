@@ -13,9 +13,9 @@ use Platine\Console\Output\Writer;
 
 class MyCommand extends Command
 {
-    public function execute()
+    public function execute(): mixed
     {
-        $this->io()->writer()->write('execute method');
+        return $this->io()->writer()->write('execute method');
     }
 
     public function interact(Reader $reader, Writer $writer): void
@@ -30,7 +30,7 @@ class MyCommand extends Command
 
 class MyCommandExecuteThrowException extends Command
 {
-    public function execute()
+    public function execute(): mixed
     {
         throw new Exception('Exception message');
     }
@@ -42,7 +42,7 @@ class MyCommandExecuteThrowException extends Command
 
 class MyParser extends Parser
 {
-    protected function emit(string $event, $value = null)
+    protected function emit(string $event, $value = null): mixed
     {
         if ($event === 'baz') {
             return false;
@@ -51,8 +51,9 @@ class MyParser extends Parser
         return true;
     }
 
-    protected function handleUnknown(string $arg, $value = null)
+    protected function handleUnknown(string $arg, $value = null): mixed
     {
+        return 0;
     }
 }
 

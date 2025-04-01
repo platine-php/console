@@ -49,7 +49,7 @@ declare(strict_types=1);
 namespace Platine\Console\Input;
 
 /**
- * Class Option
+ * @class Option
  * @package Platine\Console\Input
  */
 class Option extends Parameter

@@ -22,7 +22,6 @@ class ArgumentTest extends PlatineTestCase
         $this->assertInstanceOf(Argument::class, $s);
         $this->assertFalse($s->isRequired());
         $this->assertFalse($s->isVariadic());
-        $this->assertTrue($s->isOptional());
         $this->assertEquals('src', $s->getAttributeName());
         $this->assertEquals('src', $s->getName());
         $this->assertEquals('src', $s->getRaw());
@@ -31,12 +30,11 @@ class ArgumentTest extends PlatineTestCase
         $this->assertNull($s->getFilter());
     }
 
-    public function testConstructorRequiredAndOptionalCheck(): void
+    public function testConstructorRequiredCheck(): void
     {
         $s = new Argument('dir', 'my desc', null, true, true);
 
         $this->assertTrue($s->isRequired());
-        $this->assertFalse($s->isOptional());
         $this->assertEquals('my desc', $s->getDescription());
     }
 
@@ -50,7 +48,7 @@ class ArgumentTest extends PlatineTestCase
 
     public function testConstructorWithDefaultForVariadic(): void
     {
-        $s = new Argument('dir:tmp+45,tmp+90', 'My desc', null, false, true, true);
+        $s = new Argument('dir:tmp+45,tmp+90', 'My desc', null, false, true);
 
         $this->assertEquals('dir', $s->getName());
         $default = $s->getDefault();
@@ -68,7 +66,6 @@ class ArgumentTest extends PlatineTestCase
             null,
             true,
             false,
-            false,
             function ($raw) {
                 return strlen($raw);
             }
@@ -84,7 +81,6 @@ class ArgumentTest extends PlatineTestCase
             'my desc',
             'file1',
             true,
-            false,
             true
         );
 

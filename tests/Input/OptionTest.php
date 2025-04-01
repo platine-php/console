@@ -23,7 +23,6 @@ class OptionTest extends PlatineTestCase
         $this->assertFalse($s->isBool());
         $this->assertFalse($s->isRequired());
         $this->assertFalse($s->isVariadic());
-        $this->assertTrue($s->isOptional());
         $this->assertEquals('-p', $s->getShort());
         $this->assertEquals('--port', $s->getLong());
         $this->assertEquals('port', $s->getAttributeName());
@@ -34,24 +33,13 @@ class OptionTest extends PlatineTestCase
         $this->assertNull($s->getFilter());
     }
 
-    public function testConstructorRequiredAndOptionalCheckRequiredOptionalTrue(): void
+    public function testConstructorRequired(): void
     {
-        $s = new Option('-p', 'my desc', null, true, true);
+        $s = new Option('-p', 'my desc', null, true);
 
         $this->assertTrue($s->isRequired());
-        $this->assertFalse($s->isOptional());
         $this->assertEquals('my desc', $s->getDescription());
     }
-
-    public function testConstructorRequiredAndOptionalCheckRequiredOptionalFalse(): void
-    {
-        $s = new Option('-p', 'my desc', null, false, false);
-
-        $this->assertFalse($s->isRequired());
-        $this->assertTrue($s->isOptional());
-        $this->assertEquals('my desc', $s->getDescription());
-    }
-
 
     public function testFilter(): void
     {
@@ -60,7 +48,6 @@ class OptionTest extends PlatineTestCase
             'my desc',
             null,
             true,
-            false,
             false,
             function ($raw) {
                 return strlen($raw);
@@ -77,7 +64,6 @@ class OptionTest extends PlatineTestCase
             'my desc',
             34,
             true,
-            false,
             true
         );
 

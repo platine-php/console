@@ -37,7 +37,7 @@ namespace Platine\Console\Exception;
 use Exception;
 
 /**
- * Class ConsoleException
+ * @class ConsoleException
  * @package Platine\Console\Exception
  */
 class ConsoleException extends Exception
