@@ -280,7 +280,7 @@ class Shell
 
         $this->writeInput();
 
-        if (!is_resource($this->process)) {
+        if (is_resource($this->process) === false) {
             throw new RuntimeException(sprintf(
                 'Bad program [%s] could not be started',
                 $this->command
@@ -313,11 +313,18 @@ class Shell
 
     /**
      * Return the process command error output
+     * @param int|null $length
+     * @param int $offset
      * @return string
+     * @throws RuntimeException
      */
-    public function getErrorOutput(): string
+    public function getErrorOutput(?int $length = null, int $offset = -1): string
     {
-        $output = stream_get_contents($this->pipes[self::STDERR_DESCRIPTOR]);
+        $output = stream_get_contents(
+            $this->pipes[self::STDERR_DESCRIPTOR],
+            $length,
+            $offset
+        );
 
         if ($output === false) {
             throw new RuntimeException(sprintf(
@@ -331,11 +338,18 @@ class Shell
 
     /**
      * Return the process command output
+     * @param int|null $length
+     * @param int $offset
      * @return string
+     * @throws RuntimeException
      */
-    public function getOutput(): string
+    public function getOutput(?int $length = null, int $offset = -1): string
     {
-        $output = stream_get_contents($this->pipes[self::STDOUT_DESCRIPTOR]);
+        $output = stream_get_contents(
+            $this->pipes[self::STDOUT_DESCRIPTOR],
+            $length,
+            $offset
+        );
 
         if ($output === false) {
             throw new RuntimeException(sprintf(
