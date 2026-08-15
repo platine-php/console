@@ -144,7 +144,7 @@ class Table
         /** @var array<string, string> $header */
         foreach ($header as $col => &$value) {
             $cols = array_column($rows, $col);
-            $span = array_map('strlen', $cols);
+            $span = array_map('strlen', array_filter($cols));
             $span[] = strlen($col);
             $value = max($span);
         }
