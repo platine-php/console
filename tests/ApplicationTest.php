@@ -282,7 +282,7 @@ class ApplicationTest extends PlatineTestCase
 
         $s->io($io);
 
-        $s->handle(['test.php', 'cmd', '-o', '90']);
+        $s->handle(['test.sh', 'cmd', '-o', '90']);
 
         $stdout = $this->getOutputContent();
 
