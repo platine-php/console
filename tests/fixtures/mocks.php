@@ -170,9 +170,9 @@ function proc_open(
     $cmd,
     array $descriptorspec,
     array &$pipes,
-    string $cwd = null,
-    array $env = null,
-    array $other_options = null
+    ?string $cwd = null,
+    ?array $env = null,
+    ?array $other_options = null
 ) {
     global $mock_proc_open_to_res,
             $mock_proc_open_to_false;
