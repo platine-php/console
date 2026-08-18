@@ -284,7 +284,7 @@ class Application
                 ? $this->aliases[$argv[1]]
                 : null;
 
-        if (isset($this->commands[$alias])) {
+        if ($alias !== null && isset($this->commands[$alias])) {
             return $this->commands[$alias];
         }
 

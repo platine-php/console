@@ -226,7 +226,7 @@ class ApplicationTest extends PlatineTestCase
 
         $s->addCommand($cmd, '', false);
 
-        $s->handle(['test.php', 'c', '-p']);
+        $s->handle(['test.tnh', 'c', '-p']);
 
         $stdout = $this->getOutputContent();
 
@@ -282,7 +282,7 @@ class ApplicationTest extends PlatineTestCase
 
         $s->io($io);
 
-        $s->handle(['test.sh', 'cmd', '-o', '90']);
+        $s->handle(['test.php', 'cmd', '-o', '90']);
 
         $stdout = $this->getOutputContent();
 
